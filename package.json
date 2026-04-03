@@ -1,8 +1,0 @@
-{
-  "name": "facet",
-  "private": true,
-  "description": "Stub for Vercel when Root Directory is repo root — real app is in web/",
-  "dependencies": {
-    "next": "16.2.0"
-  }
-}
