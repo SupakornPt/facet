@@ -1,0 +1,303 @@
+{
+  "scale": {
+    "1": "A",
+    "2": "B",
+    "3": "C",
+    "4": "D",
+    "5": "E"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "When you receive a difficult and challenging goal, you usually...",
+      "textTh": "เมื่อคุณได้รับเป้าหมายที่ยากและท้าทาย คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Do only what is required", "textTh": "ทำเท่าที่จำเป็น", "score": { "Drive": 1, "Persistence": 1 } },
+        { "key": "B", "text": "Try to complete it as expected", "textTh": "พยายามให้ถึงเป้าตามที่กำหนด", "score": { "Drive": 2, "Persistence": 2 } },
+        { "key": "C", "text": "Work steadily and improve along the way", "textTh": "ทำอย่างต่อเนื่องและค่อย ๆ ปรับปรุง", "score": { "Drive": 3, "Persistence": 3 } },
+        { "key": "D", "text": "Find better methods to succeed", "textTh": "หาวิธีที่ดีกว่าเพื่อให้สำเร็จ", "score": { "Drive": 4, "Persistence": 4 } },
+        { "key": "E", "text": "Set an even higher target and push for it", "textTh": "ตั้งเป้าให้สูงขึ้นและผลักดันจนสำเร็จ", "score": { "Drive": 5, "Persistence": 5 } }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "When the team has no clear leader, you...",
+      "textTh": "เมื่อทีมไม่มีผู้นำชัดเจน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Wait for someone else to lead", "textTh": "รอให้คนอื่นนำ", "score": { "Authority": 1 } },
+        { "key": "B", "text": "Share ideas only when asked", "textTh": "เสนอความเห็นเมื่อถูกถาม", "score": { "Authority": 2 } },
+        { "key": "C", "text": "Offer suggestions and support direction", "textTh": "ช่วยเสนอแนวทางและสนับสนุนทีม", "score": { "Authority": 3 } },
+        { "key": "D", "text": "Take initiative and align the team", "textTh": "เริ่มนำและช่วยจัดทิศทางทีม", "score": { "Authority": 4 } },
+        { "key": "E", "text": "Step up as leader and make decisions", "textTh": "รับบทผู้นำและตัดสินใจ", "score": { "Authority": 5 } }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "When facing a very hard problem, you...",
+      "textTh": "เมื่อเจอปัญหาที่ยากมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Switch to easier tasks", "textTh": "เปลี่ยนไปทำงานที่ง่ายกว่า", "score": { "Persistence": 1 } },
+        { "key": "B", "text": "Try briefly and pause", "textTh": "ลองสักพักแล้วหยุด", "score": { "Persistence": 2 } },
+        { "key": "C", "text": "Keep trying until there is progress", "textTh": "พยายามต่อจนเริ่มเห็นความคืบหน้า", "score": { "Persistence": 3 } },
+        { "key": "D", "text": "Persist and adjust tactics", "textTh": "พยายามต่อและปรับวิธี", "score": { "Persistence": 4 } },
+        { "key": "E", "text": "Stay persistent until solved", "textTh": "ไม่ยอมแพ้จนกว่าจะแก้ได้", "score": { "Persistence": 5 } }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "When making an important decision, you...",
+      "textTh": "เมื่อคุณต้องตัดสินใจสำคัญ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Let others decide", "textTh": "ให้คนอื่นตัดสินใจ", "score": { "Independence": 1 } },
+        { "key": "B", "text": "Rely heavily on others' opinions", "textTh": "พึ่งความเห็นคนอื่นเป็นหลัก", "score": { "Independence": 2 } },
+        { "key": "C", "text": "Balance advice and own judgment", "textTh": "ฟังคำแนะนำและตัดสินใจร่วมกับเหตุผลตนเอง", "score": { "Independence": 3 } },
+        { "key": "D", "text": "Decide on your own with confidence", "textTh": "ตัดสินใจเองอย่างมั่นใจ", "score": { "Independence": 4 } },
+        { "key": "E", "text": "Stand by your decision even under pressure", "textTh": "ยืนหยัดการตัดสินใจแม้มีแรงกดดัน", "score": { "Independence": 5 } }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "In a large social gathering, you...",
+      "textTh": "ในงานสังคมที่มีคนมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Stay mostly quiet", "textTh": "อยู่เงียบ ๆ เป็นส่วนใหญ่", "score": { "Sociability": 1 } },
+        { "key": "B", "text": "Talk with a small familiar group", "textTh": "คุยกับคนที่คุ้นเคยกลุ่มเล็ก", "score": { "Sociability": 2 } },
+        { "key": "C", "text": "Mix with a few people", "textTh": "คุยกับคนหลายคนพอประมาณ", "score": { "Sociability": 3 } },
+        { "key": "D", "text": "Actively engage many people", "textTh": "เข้าหาคนจำนวนมากอย่างกระตือรือร้น", "score": { "Sociability": 4 } },
+        { "key": "E", "text": "Energize the room and connect everyone", "textTh": "สร้างบรรยากาศและเชื่อมคนทั้งงาน", "score": { "Sociability": 5, "Expressiveness": 4 } }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "When you feel something strongly, you...",
+      "textTh": "เมื่อคุณมีความรู้สึกบางอย่าง คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Keep it to yourself", "textTh": "เก็บไว้คนเดียว", "score": { "Expressiveness": 1 } },
+        { "key": "B", "text": "Show subtle cues", "textTh": "แสดงออกเล็กน้อย", "score": { "Expressiveness": 2 } },
+        { "key": "C", "text": "Express clearly when needed", "textTh": "สื่อสารชัดเจนเมื่อจำเป็น", "score": { "Expressiveness": 3 } },
+        { "key": "D", "text": "Express openly and directly", "textTh": "แสดงออกอย่างเปิดเผยและตรงไปตรงมา", "score": { "Expressiveness": 4 } },
+        { "key": "E", "text": "Express vividly and help others understand", "textTh": "สื่อสารอย่างชัดเจนจนคนอื่นเข้าใจความรู้สึกได้", "score": { "Expressiveness": 5 } }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Which work environment do you prefer?",
+      "textTh": "คุณชอบสภาพแวดล้อมแบบไหนในการทำงาน",
+      "choices": [
+        { "key": "A", "text": "Quiet and predictable", "textTh": "เงียบและคาดเดาได้", "score": { "Stimulation": 1 } },
+        { "key": "B", "text": "Mostly stable with occasional change", "textTh": "ค่อนข้างคงที่ มีการเปลี่ยนแปลงบ้าง", "score": { "Stimulation": 2 } },
+        { "key": "C", "text": "Balanced between routine and variety", "textTh": "สมดุลระหว่างงานเดิมกับงานใหม่", "score": { "Stimulation": 3 } },
+        { "key": "D", "text": "Dynamic and fast-moving", "textTh": "มีความเคลื่อนไหวและจังหวะเร็ว", "score": { "Stimulation": 4 } },
+        { "key": "E", "text": "Highly energetic and constantly changing", "textTh": "คึกคักและเปลี่ยนแปลงตลอดเวลา", "score": { "Stimulation": 5 } }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "When a colleague seems upset, you...",
+      "textTh": "เมื่อเพื่อนร่วมงานดูไม่สบายใจ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Do not notice", "textTh": "ไม่ทันสังเกต", "score": { "Empathy": 1 } },
+        { "key": "B", "text": "Notice but keep distance", "textTh": "สังเกตแต่ยังเว้นระยะ", "score": { "Empathy": 2 } },
+        { "key": "C", "text": "Check in briefly", "textTh": "ถามไถ่สั้น ๆ", "score": { "Empathy": 3 } },
+        { "key": "D", "text": "Listen and offer support", "textTh": "รับฟังและให้กำลังใจ", "score": { "Empathy": 4 } },
+        { "key": "E", "text": "Proactively support and follow up", "textTh": "ช่วยเหลือเชิงรุกและติดตามผล", "score": { "Empathy": 5 } }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "When conflict happens in a team, you...",
+      "textTh": "เมื่อเกิดความขัดแย้งในทีม คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Avoid getting involved", "textTh": "หลีกเลี่ยงการเข้าไปเกี่ยวข้อง", "score": { "Harmony": 1 } },
+        { "key": "B", "text": "Observe and wait", "textTh": "รอดูสถานการณ์ก่อน", "score": { "Harmony": 2 } },
+        { "key": "C", "text": "Encourage calm discussion", "textTh": "ชวนคุยกันอย่างสงบ", "score": { "Harmony": 3 } },
+        { "key": "D", "text": "Help both sides find common ground", "textTh": "ช่วยให้ทั้งสองฝ่ายหาจุดร่วม", "score": { "Harmony": 4 } },
+        { "key": "E", "text": "Actively mediate until agreement", "textTh": "ไกล่เกลี่ยเชิงรุกจนเกิดข้อตกลง", "score": { "Harmony": 5 } }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "When meeting someone new, you...",
+      "textTh": "เมื่อเจอคนใหม่ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Are very cautious", "textTh": "ระวังตัวมาก", "score": { "Trust": 1 } },
+        { "key": "B", "text": "Open up slowly over time", "textTh": "ค่อย ๆ เปิดใจตามเวลา", "score": { "Trust": 2 } },
+        { "key": "C", "text": "Trust with reasonable boundaries", "textTh": "เชื่อใจในระดับพอดีและมีขอบเขต", "score": { "Trust": 3 } },
+        { "key": "D", "text": "Assume positive intent at first", "textTh": "มองว่าอีกฝ่ายมีเจตนาดีก่อน", "score": { "Trust": 4 } },
+        { "key": "E", "text": "Readily trust and build rapport quickly", "textTh": "ไว้ใจได้เร็วและสร้างความสัมพันธ์ทันที", "score": { "Trust": 5 } }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "When starting a new project, you...",
+      "textTh": "เมื่อเริ่มโปรเจกต์ใหม่ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Start immediately without planning", "textTh": "เริ่มทำทันทีโดยไม่วางแผน", "score": { "Planning": 1 } },
+        { "key": "B", "text": "Set only basic steps", "textTh": "กำหนดแผนคร่าว ๆ", "score": { "Planning": 2 } },
+        { "key": "C", "text": "Create a workable plan", "textTh": "วางแผนให้ใช้งานได้จริง", "score": { "Planning": 3 } },
+        { "key": "D", "text": "Create a clear and structured plan", "textTh": "วางแผนชัดเจนและเป็นระบบ", "score": { "Planning": 4 } },
+        { "key": "E", "text": "Build a detailed plan with contingencies", "textTh": "วางแผนละเอียดพร้อมแผนสำรอง", "score": { "Planning": 5, "Detail": 4 } }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Before submitting work, you...",
+      "textTh": "ก่อนส่งงาน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Submit immediately", "textTh": "ส่งทันที", "score": { "Detail": 1 } },
+        { "key": "B", "text": "Do a quick scan", "textTh": "ตรวจแบบรวดเร็ว", "score": { "Detail": 2 } },
+        { "key": "C", "text": "Review important parts", "textTh": "ตรวจส่วนสำคัญ", "score": { "Detail": 3 } },
+        { "key": "D", "text": "Review carefully end to end", "textTh": "ตรวจละเอียดครบถ้วน", "score": { "Detail": 4 } },
+        { "key": "E", "text": "Review multiple rounds with checklist", "textTh": "ตรวจหลายรอบพร้อมเช็กลิสต์", "score": { "Detail": 5 } }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "When you already have a plan, you...",
+      "textTh": "เมื่อมีแผนที่วางไว้ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Change often based on mood", "textTh": "เปลี่ยนตามอารมณ์บ่อย ๆ", "score": { "Discipline": 1 } },
+        { "key": "B", "text": "Follow loosely", "textTh": "ทำตามแบบหลวม ๆ", "score": { "Discipline": 2 } },
+        { "key": "C", "text": "Follow with occasional adjustments", "textTh": "ทำตามและปรับเล็กน้อยเมื่อจำเป็น", "score": { "Discipline": 3 } },
+        { "key": "D", "text": "Follow consistently", "textTh": "ทำตามอย่างสม่ำเสมอ", "score": { "Discipline": 4 } },
+        { "key": "E", "text": "Follow strictly and track completion", "textTh": "ทำตามอย่างเคร่งครัดและติดตามความคืบหน้า", "score": { "Discipline": 5 } }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "In uncertain situations, you...",
+      "textTh": "เมื่อเจอสถานการณ์ไม่แน่นอน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Feel very anxious quickly", "textTh": "กังวลมากและเร็ว", "score": { "Anxiety": 5 } },
+        { "key": "B", "text": "Feel anxious often", "textTh": "มักรู้สึกกังวล", "score": { "Anxiety": 4 } },
+        { "key": "C", "text": "Feel mixed but manageable", "textTh": "กังวลบ้างแต่ยังจัดการได้", "score": { "Anxiety": 3 } },
+        { "key": "D", "text": "Stay mostly calm", "textTh": "ส่วนใหญ่ยังคงสงบ", "score": { "Anxiety": 2 } },
+        { "key": "E", "text": "Stay calm and composed", "textTh": "สงบและมั่นคงได้ดี", "score": { "Anxiety": 1 } }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "After failure, you...",
+      "textTh": "หลังจากล้มเหลว คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Stay discouraged for a long time", "textTh": "เสียใจและหมดแรงนาน", "score": { "Resilience": 1 } },
+        { "key": "B", "text": "Need significant recovery time", "textTh": "ต้องใช้เวลาฟื้นตัวมาก", "score": { "Resilience": 2 } },
+        { "key": "C", "text": "Recover with support", "textTh": "ฟื้นตัวได้เมื่อมีแรงสนับสนุน", "score": { "Resilience": 3 } },
+        { "key": "D", "text": "Recover fairly quickly", "textTh": "ฟื้นตัวได้ค่อนข้างเร็ว", "score": { "Resilience": 4 } },
+        { "key": "E", "text": "Learn quickly and move forward", "textTh": "เรียนรู้และเดินหน้าต่อได้เร็ว", "score": { "Resilience": 5 } }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "When facing difficult work, you think...",
+      "textTh": "เมื่อเจองานยาก คุณคิดว่า...",
+      "choices": [
+        { "key": "A", "text": "I probably cannot do this", "textTh": "ฉันน่าจะทำไม่ได้", "score": { "SelfConfidence": 1 } },
+        { "key": "B", "text": "I am unsure I can do it", "textTh": "ยังไม่มั่นใจว่าทำได้", "score": { "SelfConfidence": 2 } },
+        { "key": "C", "text": "I might do it with effort", "textTh": "น่าจะทำได้ถ้าพยายาม", "score": { "SelfConfidence": 3 } },
+        { "key": "D", "text": "I believe I can do it", "textTh": "เชื่อว่าฉันทำได้", "score": { "SelfConfidence": 4 } },
+        { "key": "E", "text": "I am confident I will do it well", "textTh": "มั่นใจว่าจะทำได้ดี", "score": { "SelfConfidence": 5 } }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "If you make a small mistake, you...",
+      "textTh": "ถ้าคุณทำผิดพลาดเล็กน้อย คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Hide it", "textTh": "ปิดบัง", "score": { "SocialDesirability": 1 } },
+        { "key": "B", "text": "Avoid talking about it", "textTh": "หลีกเลี่ยงการพูดถึง", "score": { "SocialDesirability": 2 } },
+        { "key": "C", "text": "Acknowledge if asked", "textTh": "ยอมรับเมื่อถูกถาม", "score": { "SocialDesirability": 3 } },
+        { "key": "D", "text": "Admit and fix it", "textTh": "ยอมรับและแก้ไข", "score": { "SocialDesirability": 4 } },
+        { "key": "E", "text": "Proactively admit, fix, and reflect", "textTh": "ยอมรับ แก้ไข และทบทวนด้วยตนเอง", "score": { "SocialDesirability": 5 } }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "Which role do you prefer in a team?",
+      "textTh": "คุณชอบบทบาทแบบไหนในทีม",
+      "choices": [
+        { "key": "A", "text": "Follow clear instructions", "textTh": "ทำตามคำสั่งที่ชัดเจน", "score": { "Authority": 1 } },
+        { "key": "B", "text": "Support others behind the scenes", "textTh": "ช่วยสนับสนุนอยู่เบื้องหลัง", "score": { "Authority": 2 } },
+        { "key": "C", "text": "Coordinate part of the work", "textTh": "ประสานงานบางส่วน", "score": { "Authority": 3 } },
+        { "key": "D", "text": "Lead important sections", "textTh": "นำงานส่วนสำคัญ", "score": { "Authority": 4 } },
+        { "key": "E", "text": "Lead and own the full direction", "textTh": "นำทีมและกำหนดทิศทางทั้งหมด", "score": { "Authority": 5 } }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "When your first plan fails, you...",
+      "textTh": "เมื่อแผนแรกไม่สำเร็จ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Pause and lower your target", "textTh": "หยุดและลดเป้าหมายลง", "score": { "Drive": 1, "Persistence": 1 } },
+        { "key": "B", "text": "Try one small adjustment", "textTh": "ลองปรับเล็กน้อยหนึ่งครั้ง", "score": { "Drive": 2, "Persistence": 2 } },
+        { "key": "C", "text": "Rework and continue", "textTh": "ปรับแผนและทำต่อ", "score": { "Drive": 3, "Persistence": 3 } },
+        { "key": "D", "text": "Seek feedback and push ahead", "textTh": "ขอฟีดแบ็กและเดินหน้าต่อ", "score": { "Drive": 4, "Persistence": 4 } },
+        { "key": "E", "text": "Reframe boldly and pursue stronger outcome", "textTh": "ปรับใหม่อย่างกล้าและมุ่งผลลัพธ์ที่ดีกว่าเดิม", "score": { "Drive": 5, "Persistence": 5 } }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "When you need to work with many people, you...",
+      "textTh": "เมื่อคุณต้องทำงานกับคนจำนวนมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Prefer to avoid group work", "textTh": "พยายามหลีกเลี่ยงงานกลุ่ม", "score": { "Sociability": 1 } },
+        { "key": "B", "text": "Participate only when required", "textTh": "มีส่วนร่วมเท่าที่จำเป็น", "score": { "Sociability": 2 } },
+        { "key": "C", "text": "Collaborate comfortably", "textTh": "ร่วมมือได้อย่างสบายใจ", "score": { "Sociability": 3 } },
+        { "key": "D", "text": "Engage actively with the group", "textTh": "มีส่วนร่วมอย่างกระตือรือร้น", "score": { "Sociability": 4 } },
+        { "key": "E", "text": "Build strong network and momentum", "textTh": "สร้างเครือข่ายและแรงขับให้ทีม", "score": { "Sociability": 5 } }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "When two teammates strongly disagree, you...",
+      "textTh": "เมื่อเพื่อนร่วมทีมสองคนเห็นต่างกันมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Stay out of it", "textTh": "ไม่เข้าไปเกี่ยวข้อง", "score": { "Harmony": 1, "Empathy": 1 } },
+        { "key": "B", "text": "Listen but avoid taking action", "textTh": "รับฟังแต่ไม่ลงมือช่วย", "score": { "Harmony": 2, "Empathy": 2 } },
+        { "key": "C", "text": "Help each side explain their view", "textTh": "ช่วยให้ทั้งสองฝ่ายอธิบายมุมมอง", "score": { "Harmony": 3, "Empathy": 3 } },
+        { "key": "D", "text": "Facilitate a constructive discussion", "textTh": "ช่วยนำการคุยให้สร้างสรรค์", "score": { "Harmony": 4, "Empathy": 4 } },
+        { "key": "E", "text": "Guide both sides to practical agreement", "textTh": "ช่วยให้ทั้งสองฝ่ายได้ข้อยุติที่ทำงานได้จริง", "score": { "Harmony": 5, "Empathy": 5 } }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "Before a high-stakes deadline, you...",
+      "textTh": "ก่อนถึงเส้นตายงานสำคัญ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Work reactively at the last minute", "textTh": "ทำแบบแก้สถานการณ์เฉพาะหน้า", "score": { "Planning": 1, "Detail": 1 } },
+        { "key": "B", "text": "Set rough priorities", "textTh": "กำหนดลำดับความสำคัญแบบคร่าว ๆ", "score": { "Planning": 2, "Detail": 2 } },
+        { "key": "C", "text": "Track key tasks and checks", "textTh": "ติดตามงานหลักและจุดตรวจสำคัญ", "score": { "Planning": 3, "Detail": 3 } },
+        { "key": "D", "text": "Use a structured timeline and quality checks", "textTh": "ใช้ไทม์ไลน์ชัดเจนและตรวจคุณภาพ", "score": { "Planning": 4, "Detail": 4 } },
+        { "key": "E", "text": "Run full plan, checkpoints, and contingency steps", "textTh": "บริหารแผนเต็มรูปแบบพร้อมจุดตรวจและแผนสำรอง", "score": { "Planning": 5, "Detail": 5 } }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "After receiving critical feedback, you...",
+      "textTh": "หลังได้รับฟีดแบ็กเชิงวิจารณ์ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "Feel defeated and avoid next challenge", "textTh": "รู้สึกท้อและเลี่ยงงานท้าทายถัดไป", "score": { "Resilience": 1, "SelfConfidence": 1 } },
+        { "key": "B", "text": "Feel down for a while", "textTh": "รู้สึกแย่ไปสักพัก", "score": { "Resilience": 2, "SelfConfidence": 2 } },
+        { "key": "C", "text": "Accept it and improve gradually", "textTh": "ยอมรับและค่อย ๆ ปรับปรุง", "score": { "Resilience": 3, "SelfConfidence": 3 } },
+        { "key": "D", "text": "Use it to adjust and improve quickly", "textTh": "นำไปปรับปรุงและพัฒนาได้เร็ว", "score": { "Resilience": 4, "SelfConfidence": 4 } },
+        { "key": "E", "text": "Turn it into clear action and stronger performance", "textTh": "แปลงเป็นแผนชัดเจนและยกระดับผลงาน", "score": { "Resilience": 5, "SelfConfidence": 5 } }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "Attention check: please choose option D.",
+      "textTh": "Attention check: กรุณาเลือกข้อ D",
+      "expected": 4,
+      "choices": [
+        { "key": "A", "text": "A", "textTh": "A", "score": {} },
+        { "key": "B", "text": "B", "textTh": "B", "score": {} },
+        { "key": "C", "text": "C", "textTh": "C", "score": {} },
+        { "key": "D", "text": "D", "textTh": "D", "score": {} },
+        { "key": "E", "text": "E", "textTh": "E", "score": {} }
+      ]
+    }
+  ],
+  "scoringRules": {
+    "mode": "situational-choice-scoring"
+  }
+}

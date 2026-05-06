@@ -12,5 +12,5 @@ export function localizedScale(
 
 export function localizedQuestionText(q: Question, locale: Locale): string {
   if (locale === "en") return q.text;
-  return QUESTION_TEXT_TH[q.id] ?? q.text;
+  return q.textTh ?? QUESTION_TEXT_TH[q.id] ?? q.text;
 }

@@ -1,18 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { clearAnswers } from "@/lib/storage";
 import { useLocale } from "@/lib/locale";
 
-export function BeginAssessmentLink() {
+const beginAssessmentPrimaryClass =
+  "inline-flex w-full items-center justify-center rounded-2xl bg-app-primary px-6 py-3.5 text-sm font-semibold text-app-on-primary shadow-md transition hover:bg-app-primary-hover sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
+/** Submit control for a form that navigates to `/assessment` (Enter in associated fields activates it). */
+export function BeginAssessmentSubmitButton() {
   const { m } = useLocale();
   return (
-    <Link
-      href="/assessment"
-      onClick={() => clearAnswers()}
-      className="inline-flex items-center justify-center rounded-2xl bg-linear-to-r from-sky-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:from-sky-500 hover:to-blue-600"
-    >
+    <button type="submit" className={beginAssessmentPrimaryClass}>
       {m.home.begin}
-    </Link>
+    </button>
   );
 }

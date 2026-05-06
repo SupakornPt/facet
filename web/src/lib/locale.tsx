@@ -30,13 +30,15 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setHydrated(true);
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY) as Locale | null;
-      if (saved === "en" || saved === "th") setLocaleState(saved);
-    } catch {
-      /* ignore */
-    }
+    queueMicrotask(() => {
+      setHydrated(true);
+      try {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY) as Locale | null;
+        if (saved === "en" || saved === "th") setLocaleState(saved);
+      } catch {
+        /* ignore */
+      }
+    });
   }, []);
 
   const setLocale = useCallback((l: Locale) => {

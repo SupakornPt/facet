@@ -1,7 +1,7 @@
-import questionsData from "@/data/questions.json";
+import situationalQuestionsData from "@/data/situationalQuestions.json";
 
 const VALID_QUESTION_IDS = new Set(
-  questionsData.questions.map((q) => q.id),
+  situationalQuestionsData.questions.map((q) => q.id),
 );
 
 const LIKERT_MIN = 1;

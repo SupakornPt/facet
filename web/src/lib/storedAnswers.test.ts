@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import questionsData from "@/data/questions.json";
+import situationalQuestionsData from "@/data/situationalQuestions.json";
 import { sanitizeStoredAnswersRecord } from "@/lib/storedAnswers";
 
-const firstId = questionsData.questions[0]?.id ?? 1;
+const firstId = situationalQuestionsData.questions[0]?.id ?? 1;
 
 describe("sanitizeStoredAnswersRecord", () => {
   it("returns null for non-object inputs", () => {
@@ -34,7 +34,7 @@ describe("sanitizeStoredAnswersRecord", () => {
     expect(
       sanitizeStoredAnswersRecord({
         [String(firstId)]: 0,
-        [String(questionsData.questions[1]?.id ?? firstId)]: 6,
+        [String(situationalQuestionsData.questions[1]?.id ?? firstId)]: 6,
       }),
     ).toEqual({});
   });

@@ -10,12 +10,23 @@ export type ScoreBand = "low" | "moderate" | "high";
 export interface Question {
   id: number;
   text: string;
-  factor: string;
+  textTh?: string;
+  /** Omitted on situational items (scoring uses choice maps). */
+  factor?: string;
   subFacet?: string;
   reverse?: boolean;
   pair?: number;
   expected?: number;
+  choices?: {
+    key: string;
+    text: string;
+    textTh?: string;
+    score: Record<string, number | boolean>;
+  }[];
 }
+
+/** App ships situational-choice assessment only. */
+export type AssessmentType = "situational";
 
 export interface QuestionsPayload {
   scale: Record<string, string>;

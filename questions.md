@@ -471,3 +471,211 @@ List of question
     "attentionCheck": "Q41 == 4 AND Q42 == 2 AND Q62 == 4"
   }
 }
+
+-------------------------------------------------------------------------------------------------------
+Other way of question
+
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "เมื่อคุณได้รับเป้าหมายที่ยากและท้าทาย คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ทำเท่าที่จำเป็น", "score": { "Drive": 1, "Persistence": 1 } },
+        { "key": "B", "text": "พยายามให้ถึงเป้าหมาย", "score": { "Drive": 3, "Persistence": 3 } },
+        { "key": "C", "text": "หาวิธีใหม่เพื่อให้สำเร็จ", "score": { "Drive": 4, "Persistence": 5 } },
+        { "key": "D", "text": "ตั้งเป้าให้สูงขึ้นไปอีก", "score": { "Drive": 5, "Persistence": 5 } }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "เมื่อทีมไม่มีผู้นำชัดเจน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "รอให้คนอื่นนำ", "score": { "Authority": 1 } },
+        { "key": "B", "text": "ช่วยเสนอความคิดเห็นเล็กน้อย", "score": { "Authority": 3 } },
+        { "key": "C", "text": "เสนอแนวทางและชวนทีมทำตาม", "score": { "Authority": 4 } },
+        { "key": "D", "text": "รับบทผู้นำและตัดสินใจ", "score": { "Authority": 5 } }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "เมื่อเจอปัญหาที่ยากมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "เปลี่ยนไปทำอย่างอื่น", "score": { "Persistence": 1 } },
+        { "key": "B", "text": "ลองอีกสักพัก", "score": { "Persistence": 3 } },
+        { "key": "C", "text": "พยายามจนกว่าจะสำเร็จ", "score": { "Persistence": 5 } },
+        { "key": "D", "text": "หาวิธีใหม่และไม่ยอมแพ้", "score": { "Persistence": 5, "Drive": 4 } }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "เมื่อคุณต้องตัดสินใจสำคัญ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ให้คนอื่นตัดสินใจ", "score": { "Independence": 1 } },
+        { "key": "B", "text": "ขอคำแนะนำก่อน", "score": { "Independence": 2 } },
+        { "key": "C", "text": "ตัดสินใจเอง", "score": { "Independence": 4 } },
+        { "key": "D", "text": "มั่นใจในตัวเองแม้คนอื่นไม่เห็นด้วย", "score": { "Independence": 5 } }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "ในงานสังคมที่มีคนมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "อยู่เงียบ ๆ", "score": { "Sociability": 1 } },
+        { "key": "B", "text": "คุยกับคนที่รู้จัก", "score": { "Sociability": 3 } },
+        { "key": "C", "text": "คุยกับหลายคน", "score": { "Sociability": 4 } },
+        { "key": "D", "text": "สร้างบรรยากาศให้สนุก", "score": { "Sociability": 5, "Expressiveness": 5 } }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "เมื่อคุณมีความรู้สึกบางอย่าง คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "เก็บไว้คนเดียว", "score": { "Expressiveness": 1 } },
+        { "key": "B", "text": "แสดงออกเล็กน้อย", "score": { "Expressiveness": 3 } },
+        { "key": "C", "text": "แสดงออกชัดเจน", "score": { "Expressiveness": 4 } },
+        { "key": "D", "text": "แสดงออกอย่างเปิดเผย", "score": { "Expressiveness": 5 } }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "คุณชอบสภาพแวดล้อมแบบไหนในการทำงาน",
+      "choices": [
+        { "key": "A", "text": "เงียบและคาดเดาได้", "score": { "Stimulation": 1 } },
+        { "key": "B", "text": "ปานกลาง", "score": { "Stimulation": 3 } },
+        { "key": "C", "text": "มีความเคลื่อนไหว", "score": { "Stimulation": 4 } },
+        { "key": "D", "text": "คึกคักและเปลี่ยนแปลงตลอด", "score": { "Stimulation": 5 } }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "เมื่อเพื่อนร่วมงานดูไม่สบายใจ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ไม่สังเกต", "score": { "Empathy": 1 } },
+        { "key": "B", "text": "สังเกตแต่ไม่ทำอะไร", "score": { "Empathy": 2 } },
+        { "key": "C", "text": "ถามไถ่", "score": { "Empathy": 4 } },
+        { "key": "D", "text": "ช่วยและสนับสนุน", "score": { "Empathy": 5 } }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "เมื่อเกิดความขัดแย้งในทีม คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "หลีกเลี่ยง", "score": { "Harmony": 1 } },
+        { "key": "B", "text": "รอดูสถานการณ์", "score": { "Harmony": 2 } },
+        { "key": "C", "text": "ช่วยไกล่เกลี่ย", "score": { "Harmony": 5 } },
+        { "key": "D", "text": "เผชิญหน้าเพื่อแก้ปัญหา", "score": { "Harmony": 2 } }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "เมื่อเจอคนใหม่ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ระวังตัวมาก", "score": { "Trust": 1 } },
+        { "key": "B", "text": "ค่อย ๆ เปิดใจ", "score": { "Trust": 3 } },
+        { "key": "C", "text": "เชื่อใจระดับหนึ่ง", "score": { "Trust": 4 } },
+        { "key": "D", "text": "เชื่อว่าคนส่วนใหญ่มีเจตนาดี", "score": { "Trust": 5 } }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "เมื่อเริ่มโปรเจกต์ใหม่ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "เริ่มเลย", "score": { "Planning": 1 } },
+        { "key": "B", "text": "คิดคร่าว ๆ", "score": { "Planning": 3 } },
+        { "key": "C", "text": "วางแผนชัดเจน", "score": { "Planning": 5 } },
+        { "key": "D", "text": "วางแผนละเอียดมาก", "score": { "Planning": 5, "Detail": 5 } }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "ก่อนส่งงาน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ส่งเลย", "score": { "Detail": 1 } },
+        { "key": "B", "text": "ตรวจเล็กน้อย", "score": { "Detail": 3 } },
+        { "key": "C", "text": "ตรวจละเอียด", "score": { "Detail": 5 } },
+        { "key": "D", "text": "ตรวจซ้ำหลายรอบ", "score": { "Detail": 5 } }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "เมื่อมีแผนที่วางไว้ คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "เปลี่ยนตามอารมณ์", "score": { "Discipline": 1 } },
+        { "key": "B", "text": "ปรับเล็กน้อย", "score": { "Discipline": 3 } },
+        { "key": "C", "text": "ทำตามแผน", "score": { "Discipline": 4 } },
+        { "key": "D", "text": "ทำตามอย่างเคร่งครัด", "score": { "Discipline": 5 } }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "เมื่อเจอสถานการณ์ไม่แน่นอน คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "กังวลมาก", "score": { "Anxiety": 5 } },
+        { "key": "B", "text": "กังวลเล็กน้อย", "score": { "Anxiety": 3 } },
+        { "key": "C", "text": "รับมือได้", "score": { "Anxiety": 2 } },
+        { "key": "D", "text": "ไม่กังวล", "score": { "Anxiety": 1 } }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "หลังจากล้มเหลว คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "เสียใจนาน", "score": { "Resilience": 1 } },
+        { "key": "B", "text": "ใช้เวลาฟื้นตัว", "score": { "Resilience": 3 } },
+        { "key": "C", "text": "กลับมาได้เร็ว", "score": { "Resilience": 4 } },
+        { "key": "D", "text": "เรียนรู้และไปต่อทันที", "score": { "Resilience": 5 } }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "เมื่อเจองานยาก คุณคิดว่า...",
+      "choices": [
+        { "key": "A", "text": "ทำไม่ได้", "score": { "SelfConfidence": 1 } },
+        { "key": "B", "text": "อาจทำได้", "score": { "SelfConfidence": 3 } },
+        { "key": "C", "text": "น่าจะทำได้", "score": { "SelfConfidence": 4 } },
+        { "key": "D", "text": "มั่นใจว่าทำได้", "score": { "SelfConfidence": 5 } }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "ถ้าคุณทำผิดพลาดเล็กน้อย คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "ปิดบัง", "score": { "SocialDesirability": 1 } },
+        { "key": "B", "text": "ไม่พูดถึง", "score": { "SocialDesirability": 2 } },
+        { "key": "C", "text": "ยอมรับ", "score": { "SocialDesirability": 4 } },
+        { "key": "D", "text": "ยอมรับและแก้ไข", "score": { "SocialDesirability": 5 } }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "คุณชอบบทบาทแบบไหนในทีม",
+      "choices": [
+        { "key": "A", "text": "ตาม", "score": { "Authority": 1 } },
+        { "key": "B", "text": "ช่วย", "score": { "Authority": 3 } },
+        { "key": "C", "text": "นำบางครั้ง", "score": { "Authority": 4 } },
+        { "key": "D", "text": "นำทีม", "score": { "Authority": 5 } }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "Attention check: กรุณาเลือกข้อ C",
+      "choices": [
+        { "key": "A", "text": "A", "score": {} },
+        { "key": "B", "text": "B", "score": {} },
+        { "key": "C", "text": "C", "score": { "attention": true } },
+        { "key": "D", "text": "D", "score": {} }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "เมื่อคุณต้องทำงานกับคนจำนวนมาก คุณจะ...",
+      "choices": [
+        { "key": "A", "text": "หลีกเลี่ยง", "score": { "Sociability": 1 } },
+        { "key": "B", "text": "ทำเท่าที่จำเป็น", "score": { "Sociability": 2 } },
+        { "key": "C", "text": "ร่วมมือ", "score": { "Sociability": 4 } },
+        { "key": "D", "text": "มีส่วนร่วมอย่างเต็มที่", "score": { "Sociability": 5 } }
+      ]
+    }
+  ]
+}

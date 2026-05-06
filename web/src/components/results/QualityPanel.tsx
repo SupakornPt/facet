@@ -18,13 +18,13 @@ export function QualityPanel({ quality }: QualityPanelProps) {
       <p className="mt-1 text-sm text-amber-950/70">{m.quality.subtitle}</p>
       <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
         <div>
-          <dt className="text-slate-600">{m.quality.sdLabel}</dt>
-          <dd className="font-semibold text-slate-900">
+          <dt className="text-app-muted">{m.quality.sdLabel}</dt>
+          <dd className="font-semibold text-foreground">
             {Math.round(quality.socialDesirabilityIndex)} / 100
           </dd>
         </div>
         <div>
-          <dt className="text-slate-600">{m.quality.attentionLabel}</dt>
+          <dt className="text-app-muted">{m.quality.attentionLabel}</dt>
           <dd
             className={
               quality.attentionPass
@@ -48,14 +48,14 @@ export function QualityPanel({ quality }: QualityPanelProps) {
         </ul>
       ) : null}
       <div className="mt-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+        <p className="text-xs font-medium uppercase tracking-wide text-app-subtle">
           {m.quality.consistencyTitle}
         </p>
         <ul className="mt-2 flex flex-wrap gap-2">
           {quality.consistencyPairs.map((p) => (
             <li
               key={`${p.a}-${p.b}`}
-              className="rounded-lg bg-white/80 px-2 py-1 text-xs text-slate-700 ring-1 ring-slate-200"
+              className="rounded-lg border border-app-border bg-app-card px-2 py-1 text-xs text-foreground"
             >
               Q{p.a}/Q{p.b}: Δ {p.diff.toFixed(2)}
             </li>

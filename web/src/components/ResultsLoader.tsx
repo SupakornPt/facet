@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const ResultsClient = dynamic(() => import("@/components/ResultsClient"), {
   ssr: false,
   loading: () => (
-    <div className="flex flex-1 items-center justify-center text-slate-600">
+    <div className="flex flex-1 items-center justify-center text-app-muted">
       Loading results…
     </div>
   ),

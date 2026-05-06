@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { FixedLanguageSwitcher } from "@/components/FixedLanguageSwitcher";
 import { SkipToContent } from "@/components/SkipToContent";
 
 const dmSans = DM_Sans({
@@ -32,15 +32,11 @@ export default function RootLayout({
       className={`${dmSans.variable} ${notoThai.variable} h-full antialiased`}
     >
       <body
-        className={`${dmSans.className} min-h-full flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100 via-slate-50 to-slate-100 text-slate-900`}
+        className={`${dmSans.className} text-foreground flex min-h-full flex-col`}
       >
         <Providers>
           <SkipToContent />
-          <div className="pointer-events-none fixed right-4 top-4 z-50 sm:right-6 sm:top-6">
-            <div className="pointer-events-auto">
-              <LanguageSwitcher />
-            </div>
-          </div>
+          <FixedLanguageSwitcher />
           <div className="flex flex-1 flex-col" id="main">
             {children}
           </div>

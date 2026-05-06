@@ -1,21 +1,91 @@
 @import "tailwindcss";
 
+/* Clean, eye-friendly UI palette for longer reading sessions */
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f6f8f8;
+  --foreground: #1e293b;
+  --app-elevated: #fbfcfc;
+  --app-card: #ffffff;
+  --app-border: #e5eaef;
+  --app-border-strong: #d4dde6;
+  --app-muted: #64748b;
+  --app-subtle: #94a3b8;
+  --app-primary: #0f766e;
+  --app-primary-hover: #115e59;
+  --app-primary-soft: rgba(15, 118, 110, 0.1);
+  --app-on-primary: #ffffff;
+  --app-ring: #14b8a6;
+  --app-header-bg: rgba(255, 255, 255, 0.9);
+  --app-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --app-shadow-lg: 0 10px 28px -14px rgba(15, 23, 42, 0.16);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111827;
+    --foreground: #e5e7eb;
+    --app-elevated: #182232;
+    --app-card: #1e293b;
+    --app-border: #334155;
+    --app-border-strong: #475569;
+    --app-muted: #94a3b8;
+    --app-subtle: #64748b;
+    --app-primary: #2dd4bf;
+    --app-primary-hover: #5eead4;
+    --app-primary-soft: rgba(45, 212, 191, 0.08);
+    --app-on-primary: #042f2e;
+    --app-ring: #5eead4;
+    --app-header-bg: rgba(30, 41, 59, 0.86);
+    --app-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+    --app-shadow-lg: 0 14px 38px -16px rgba(0, 0, 0, 0.5);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-app-elevated: var(--app-elevated);
+  --color-app-card: var(--app-card);
+  --color-app-border: var(--app-border);
+  --color-app-border-strong: var(--app-border-strong);
+  --color-app-muted: var(--app-muted);
+  --color-app-subtle: var(--app-subtle);
+  --color-app-primary: var(--app-primary);
+  --color-app-primary-hover: var(--app-primary-hover);
+  --color-app-primary-soft: var(--app-primary-soft);
+  --color-app-on-primary: var(--app-on-primary);
+  --color-app-ring: var(--app-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
-  background: transparent;
+  background-color: var(--background);
+  background-image: radial-gradient(
+    ellipse 90% 58% at 50% -18%,
+    var(--app-primary-soft),
+    transparent 58%
+  );
   color: var(--foreground);
 }
 
 html[data-locale="th"] body {
   font-family: var(--font-noto-thai), var(--font-dm-sans), ui-sans-serif, system-ui,
     sans-serif;
+}
+
+/* Noto Sans Thai for numerals — matches Thai UI and keeps counts visually even */
+.font-thai-numerals {
+  font-family: var(--font-noto-thai), var(--font-dm-sans), ui-sans-serif, system-ui,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
 }
