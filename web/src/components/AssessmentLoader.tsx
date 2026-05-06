@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const AssessmentClient = dynamic(() => import("@/components/AssessmentClient"), {
   ssr: false,
@@ -12,5 +13,15 @@ const AssessmentClient = dynamic(() => import("@/components/AssessmentClient"), 
 });
 
 export default function AssessmentLoader() {
-  return <AssessmentClient />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-1 items-center justify-center text-app-muted">
+          Loading questionnaire…
+        </div>
+      }
+    >
+      <AssessmentClient />
+    </Suspense>
+  );
 }

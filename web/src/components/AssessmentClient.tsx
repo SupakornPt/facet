@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import situationalQuestionsData from "@/data/situationalQuestions.json";
 import { LikertScale } from "@/components/LikertScale";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -19,6 +19,7 @@ const situationalData = situationalQuestionsData as QuestionsPayload;
 
 export default function AssessmentClient() {
   const { locale, m } = useLocale();
+  const searchParams = useSearchParams();
   const questionsPerPage = QUESTIONS_PER_PAGE;
   const data = situationalData;
   const scale = useMemo(
@@ -46,6 +47,34 @@ export default function AssessmentClient() {
     saveAnswers("situational", answers);
   }, [answers]);
 
+  const focusRaw = searchParams.get("focus");
+  useEffect(() => {
+    if (!focusRaw) return;
+    const id = Number(focusRaw);
+    if (!Number.isFinite(id)) return;
+    const idx = sortedQuestions.findIndex((q) => q.id === id);
+    if (idx < 0) return;
+    const targetPage = Math.floor(idx / questionsPerPage);
+    setPage(targetPage);
+  }, [focusRaw, sortedQuestions, questionsPerPage]);
+
+  useEffect(() => {
+    if (!focusRaw) return;
+    const id = Number(focusRaw);
+    if (!Number.isFinite(id)) return;
+    const idx = sortedQuestions.findIndex((q) => q.id === id);
+    if (idx < 0) return;
+    const targetPage = Math.floor(idx / questionsPerPage);
+    if (page !== targetPage) return;
+    const t = window.setTimeout(() => {
+      document.getElementById(`facet5-q-${id}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [page, focusRaw, sortedQuestions, questionsPerPage]);
+
   const total = sortedQuestions.length;
   const totalPages = Math.max(1, Math.ceil(total / questionsPerPage));
   const pageStart = page * questionsPerPage;
@@ -62,10 +91,17 @@ export default function AssessmentClient() {
     return qs.every((q) => answers[q.id] !== undefined);
   }
 
+  function scrollPageToTop() {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }
+
   function goNext() {
     if (!pageFullyAnswered(pageQuestions)) return;
     if (page < totalPages - 1) {
       setPage((p) => p + 1);
+      scrollPageToTop();
       return;
     }
     if (allQuestionsAnswered(sortedQuestions, answers)) {
@@ -74,7 +110,10 @@ export default function AssessmentClient() {
   }
 
   function goPrev() {
-    if (page > 0) setPage((p) => p - 1);
+    if (page > 0) {
+      setPage((p) => p - 1);
+      scrollPageToTop();
+    }
   }
 
   if (pageQuestions.length === 0) {
@@ -138,10 +177,12 @@ export default function AssessmentClient() {
           {pageQuestions.map((q, idx) => (
             <section
               key={q.id}
+              id={`facet5-q-${q.id}`}
+              tabIndex={-1}
               className={
                 idx < pageQuestions.length - 1
-                  ? "border-b border-app-border pb-10 sm:pb-12"
-                  : ""
+                  ? "scroll-mt-28 border-b border-app-border pb-10 sm:pb-12"
+                  : "scroll-mt-28"
               }
             >
               <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-app-primary">

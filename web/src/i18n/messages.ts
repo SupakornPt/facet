@@ -107,6 +107,10 @@ export type Messages = {
     shareDownloadPng: string;
     shareDownloadPngWorking: string;
     shareCardFoot: string;
+    /** Shown when the instruction-following item was answered incorrectly. */
+    attentionFailTitle: string;
+    attentionFailBody: string;
+    attentionFailFixCta: string;
   };
   triLevel: {
     badge: string;
@@ -246,6 +250,10 @@ const en: Messages = {
     shareDownloadPng: "Download PNG card",
     shareDownloadPngWorking: "Creating image…",
     shareCardFoot: "Summary only · Facet5-style demo · Not clinical",
+    attentionFailTitle: "Attention check missed",
+    attentionFailBody:
+      "One short item only checks that you followed the wording. Your choice there did not match the instruction, so treat this profile as less reliable until you fix it. Your other answers stay saved—open the question and select the option it asks for.",
+    attentionFailFixCta: "Go to that question",
   },
   triLevel: {
     badge: "Facet5 Tri-Level",
@@ -387,6 +395,10 @@ const th: Messages = {
     shareDownloadPng: "ดาวน์โหลดการ์ด PNG",
     shareDownloadPngWorking: "กำลังสร้างรูป…",
     shareCardFoot: "สรุปเท่านั้น · Facet5-style สาธิต · ไม่ใช่ทางคลินิก",
+    attentionFailTitle: "ไม่ผ่านข้อตรวจสอบความใส่ใจ",
+    attentionFailBody:
+      "มีข้อหนึ่งใช้เช็กว่าคุณทำตามคำถามได้ ในข้อนั้นคำตอบของคุณไม่ตรงตามที่ขอ จึงควรถือว่าโปรไฟล์นี้เชื่อถือได้น้อยกว่าปกติจนกว่าจะแก้ไข คำตอบข้ออื่นยังเก็บไว้ครบ—เปิดไปที่ข้อนั้นแล้วเลือกตามที่คำถามบอกให้เลือก",
+    attentionFailFixCta: "ไปที่ข้อนั้น",
   },
   triLevel: {
     badge: "Facet5 Tri-Level",

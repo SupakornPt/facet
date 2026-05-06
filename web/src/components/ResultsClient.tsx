@@ -47,6 +47,17 @@ export default function ResultsClient() {
     return computeAssessment(data, answers);
   }, [data]);
 
+  const attentionFailQuestionId = useMemo(() => {
+    const failed = result?.quality.attentionDetail.find((d) => !d.ok);
+    if (failed) return failed.id;
+    return data.questions.find((q) => q.expected !== undefined)?.id;
+  }, [data.questions, result?.quality.attentionDetail]);
+
+  const reviewFocusId =
+    result && !result.quality.attentionPass && attentionFailQuestionId !== undefined
+      ? attentionFailQuestionId
+      : undefined;
+
   useEffect(() => {
     if (result) return;
     router.replace("/assessment");
@@ -189,7 +200,10 @@ export default function ResultsClient() {
             variant="icon-toggle"
             className="hidden h-auto w-auto rounded-xl border border-app-border bg-app-card/95 px-2 py-1.5 md:inline-flex lg:hidden"
           />
-          <ReviewAssessmentLink className="inline-flex w-full items-center justify-center rounded-2xl border-2 border-app-border px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-app-elevated sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+          <ReviewAssessmentLink
+            focusQuestionId={reviewFocusId}
+            className="inline-flex w-full items-center justify-center rounded-2xl border-2 border-app-border px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-app-elevated sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
             {m.results.review}
           </ReviewAssessmentLink>
           <button
@@ -205,6 +219,26 @@ export default function ResultsClient() {
           </button>
         </div>
       </header>
+
+      {!result.quality.attentionPass ? (
+        <div
+          role="alert"
+          className="rounded-2xl border border-rose-200/90 bg-rose-50/95 px-4 py-4 text-rose-950 shadow-sm dark:border-rose-800/60 dark:bg-rose-950/35 dark:text-rose-100 sm:px-6 sm:py-5"
+        >
+          <p className="text-sm font-semibold">{m.results.attentionFailTitle}</p>
+          <p className="mt-2 text-sm leading-relaxed opacity-95">
+            {m.results.attentionFailBody}
+          </p>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+            <ReviewAssessmentLink
+              focusQuestionId={attentionFailQuestionId ?? undefined}
+              className="inline-flex w-full items-center justify-center rounded-xl bg-rose-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-800 sm:w-auto dark:bg-rose-600 dark:hover:bg-rose-500"
+            >
+              {m.results.attentionFailFixCta}
+            </ReviewAssessmentLink>
+          </div>
+        </div>
+      ) : null}
 
       <div
         ref={setIdentityCardNode}
