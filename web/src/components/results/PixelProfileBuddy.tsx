@@ -36,10 +36,10 @@ export function PixelProfileBuddy({
   const src = PROFILE_BUDDY_IMAGES[vi] ?? PROFILE_BUDDY_IMAGES[0]!;
 
   if (fit === "fill") {
-    const objectFit =
-      fillObjectFit === "cover"
-        ? "object-cover object-center"
-        : "object-contain object-center";
+    const objectFitClass =
+      fillObjectFit === "cover" ? "object-cover" : "object-contain";
+    const objectPosition =
+      fillObjectFit === "cover" ? "center top" : "center center";
     return (
       <img
         src={src}
@@ -47,8 +47,14 @@ export function PixelProfileBuddy({
         draggable={false}
         loading="eager"
         decoding="async"
-        className={`absolute inset-0 box-border min-h-0 min-w-0 ${objectFit}`}
-        style={{ objectPosition: "center center" }}
+        className={`absolute inset-0 box-border min-h-0 min-w-0 ${objectFitClass}`}
+        style={{
+          display: "block",
+          zIndex: 1,
+          objectPosition,
+          width: "100%",
+          height: "100%",
+        }}
       />
     );
   }

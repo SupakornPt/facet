@@ -2,10 +2,18 @@ import { toPng } from "html-to-image";
 
 type ToPngOptions = NonNullable<Parameters<typeof toPng>[1]>;
 
-/** WebKit / iOS: embedded webfonts in SVG snapshots often corrupt text; system fonts are safer. */
-function isAppleTouchDevice(): boolean {
+/**
+ * WebKit Safari: embedded @font-face inside SVG foreignObject often corrupts layout
+ * or raster output. Blink/Gecko UAs also contain "Safari" — exclude those.
+ */
+function shouldSkipEmbeddedFontsForSnapshot(): boolean {
   if (typeof navigator === "undefined") return false;
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const ua = navigator.userAgent;
+  if (!/AppleWebKit/i.test(ua) || !/Safari/i.test(ua)) return false;
+  if (/Chrome|Chromium|CriOS|Edg|OPR|Brave|FxiOS|Android.*Chrome/i.test(ua)) {
+    return false;
+  }
+  return true;
 }
 
 function clientBoxWithBorder(node: HTMLElement): { w: number; h: number } {
@@ -112,7 +120,7 @@ function clampPixelRatioForSize(
 
 /**
  * Wraps html-to-image `toPng`: default sizing uses clientWidth/clientHeight and
- * clips overflow; optional dimensions fix that. Safari/iOS benefits from
+ * clips overflow; optional dimensions fix that. WebKit Safari benefits from
  * decode-ready images, device pixel ratio, and skipping flaky font embedding.
  */
 export async function toPngFullElement(
@@ -129,9 +137,9 @@ export async function toPngFullElement(
   const requestedPr = defaultPixelRatio(options?.pixelRatio);
   const pixelRatio = clampPixelRatioForSize(requestedPr, widthCss, heightCss);
 
-  const apple = isAppleTouchDevice();
   const skipFonts =
-    options?.skipFonts ?? (apple ? true : undefined);
+    options?.skipFonts ??
+    (shouldSkipEmbeddedFontsForSnapshot() ? true : undefined);
 
   return toPng(node, {
     ...options,
