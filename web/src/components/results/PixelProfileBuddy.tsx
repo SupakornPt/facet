@@ -45,6 +45,7 @@ export function PixelProfileBuddy({
         src={src}
         alt={label}
         draggable={false}
+        loading="eager"
         decoding="async"
         className={`absolute inset-0 box-border min-h-0 min-w-0 ${objectFit}`}
         style={{ objectPosition: "center center" }}
@@ -59,6 +60,7 @@ export function PixelProfileBuddy({
       width={size}
       height={size}
       draggable={false}
+      loading="eager"
       decoding="async"
       style={{
         width: size,

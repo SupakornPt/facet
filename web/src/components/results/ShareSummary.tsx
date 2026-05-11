@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { toPng } from "html-to-image";
+import { toPngFullElement } from "@/lib/htmlToImageFullSize";
 import type { AssessmentResult } from "@/types/assessment";
 import { buildShareSummaryText } from "@/lib/shareSummary";
 import { useLocale } from "@/lib/locale";
@@ -57,9 +57,8 @@ export function ShareSummary({ result }: ShareSummaryProps) {
     if (!node) return;
     setPngBusy(true);
     try {
-      const dataUrl = await toPng(node, {
+      const dataUrl = await toPngFullElement(node, {
         cacheBust: true,
-        pixelRatio: 2,
         backgroundColor: "#ffffff",
       });
       const a = document.createElement("a");

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toPng } from "html-to-image";
+import { toPngFullElement } from "@/lib/htmlToImageFullSize";
 import { ReviewAssessmentLink } from "@/components/ReviewAssessmentLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import situationalQuestionsData from "@/data/situationalQuestions.json";
@@ -35,7 +35,7 @@ export default function ResultsClient() {
   const [showMore, setShowMore] = useState(false);
   const [copied, setCopied] = useState(false);
   const [pngBusy, setPngBusy] = useState(false);
-  const [identityCardNode, setIdentityCardNode] = useState<HTMLDivElement | null>(null);
+  const [identityCardNode, setIdentityCardNode] = useState<HTMLElement | null>(null);
   const [holderName] = useState(() =>
     typeof window !== "undefined" ? loadProfileName() : "",
   );
@@ -162,9 +162,8 @@ export default function ResultsClient() {
     if (!identityCardNode) return;
     setPngBusy(true);
     try {
-      const dataUrl = await toPng(identityCardNode, {
+      const dataUrl = await toPngFullElement(identityCardNode, {
         cacheBust: true,
-        pixelRatio: 2,
         backgroundColor: "#e8f4fc",
       });
       const a = document.createElement("a");
@@ -240,11 +239,9 @@ export default function ResultsClient() {
         </div>
       ) : null}
 
-      <div
-        ref={setIdentityCardNode}
-        className="mx-auto w-full max-w-[min(100%,38.4rem)] px-1 pb-6 pt-1 sm:pb-8"
-      >
+      <div className="mx-auto w-full max-w-[min(100%,38.4rem)] px-1 pb-6 pt-1 sm:pb-8">
         <section
+          ref={setIdentityCardNode}
           className="overflow-hidden rounded-2xl border border-[#8eb8d8] bg-[#e8f4fc] shadow-[inset_0_1px_0_rgba(255,255,255,0.65),inset_0_-1px_0_rgba(12,35,64,0.06),0_2px_4px_rgba(12,35,64,0.08),0_8px_16px_-4px_rgba(12,35,64,0.18),0_20px_40px_-12px_rgba(12,35,64,0.28)] ring-1 ring-white/80 dark:border-[#8eb8d8] dark:bg-[#e8f4fc]! dark:ring-white/40 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_32px_-8px_rgba(0,0,0,0.55),0_24px_48px_-12px_rgba(0,0,0,0.45)]"
           style={{
             backgroundImage: `
@@ -271,12 +268,12 @@ export default function ResultsClient() {
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-start justify-between gap-2">
-              <h2 className="text-left text-2xl font-black uppercase tracking-[0.12em] text-[#0c2340] sm:text-right sm:text-3xl">
+              <h2 className="text-left text-2xl font-black uppercase leading-tight tracking-[0.12em] text-[#0c2340] sm:text-right sm:text-3xl">
                 {m.results.idCardVisualTitle}
               </h2>
             </div>
 
-            <div className="mt-4 space-y-3">
+            <div className="mt-5 space-y-3 sm:mt-4">
               <div className="border-b-2 border-[#0c2340] pb-1.5">
                 <p className="text-[10px] font-bold uppercase tracking-wide text-[#3d5a73]">
                   {m.results.nameField}
