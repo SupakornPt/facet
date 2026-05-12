@@ -16,63 +16,166 @@ function shouldSkipEmbeddedFontsForSnapshot(): boolean {
   return true;
 }
 
-/** WebKit Safari: foreignObject snapshots often drop img URLs; inline as data URLs first. */
-async function beginSafariInlineImagesSnapshot(
+async function imageUrlToPaintUrl(
+  src: string,
+): Promise<{ url: string; revoke: () => void } | null> {
+  if (/^data:/i.test(src)) {
+    return { url: src, revoke: () => {} };
+  }
+  try {
+    const abs = new URL(src, window.location.href).href;
+    const res = await fetch(abs, { credentials: "same-origin" });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    const maxEdge = 960;
+
+    if (typeof createImageBitmap === "function") {
+      try {
+        const bmp = await createImageBitmap(blob);
+        let w = bmp.width;
+        let h = bmp.height;
+        if (w > maxEdge || h > maxEdge) {
+          const s = Math.min(maxEdge / w, maxEdge / h);
+          w = Math.max(1, Math.round(w * s));
+          h = Math.max(1, Math.round(h * s));
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(bmp, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL("image/png");
+          bmp.close();
+          return { url: dataUrl, revoke: () => {} };
+        }
+        bmp.close();
+      } catch {
+        /* fall through to blob URL */
+      }
+    }
+
+    const blobUrl = URL.createObjectURL(blob);
+    return {
+      url: blobUrl,
+      revoke: () => URL.revokeObjectURL(blobUrl),
+    };
+  } catch {
+    return null;
+  }
+}
+
+function backgroundSizeFromObjectFit(fit: string): string {
+  const f = fit.trim().toLowerCase();
+  if (f === "contain") return "contain";
+  if (f === "cover") return "cover";
+  if (f === "fill") return "100% 100%";
+  if (f === "none") return "auto";
+  if (f === "scale-down") return "contain";
+  return "cover";
+}
+
+/**
+ * WebKit Safari often paints &lt;img&gt; as empty inside SVG foreignObject even with data URLs.
+ * Hide the img and paint the same pixels with a div + background-image for the snapshot only.
+ */
+async function beginSafariForeignObjectRasterWorkaround(
   root: HTMLElement,
 ): Promise<() => void> {
   if (!shouldSkipEmbeddedFontsForSnapshot()) {
     return () => {};
   }
 
-  const imgs = [...root.querySelectorAll<HTMLImageElement>("img")];
-  const snapshots: { img: HTMLImageElement; srcAttr: string | null }[] = [];
+  type Entry = {
+    parent: HTMLElement;
+    overlay: HTMLDivElement;
+    img: HTMLImageElement;
+    prevImgVisibility: string;
+    prevImgOpacity: string;
+    parentPositionWasStatic: boolean;
+    revokePaintUrl: () => void;
+  };
 
-  for (const img of imgs) {
-    const resolved = img.currentSrc || img.src;
-    if (!resolved || /^data:/i.test(resolved)) continue;
-    snapshots.push({
+  const entries: Entry[] = [];
+
+  for (const img of root.querySelectorAll<HTMLImageElement>("img")) {
+    if (img.naturalWidth < 1 || img.naturalHeight < 1) continue;
+
+    const src = img.currentSrc || img.src;
+    if (!src) continue;
+
+    const painted = await imageUrlToPaintUrl(src);
+    if (!painted) continue;
+    const { url: paintUrl, revoke: revokePaintUrl } = painted;
+
+    const parent = img.parentElement;
+    if (!(parent instanceof HTMLElement)) continue;
+
+    const cs = getComputedStyle(img);
+    const parentCs = getComputedStyle(parent);
+    let parentPositionWasStatic = false;
+    if (parentCs.position === "static") {
+      parent.style.position = "relative";
+      parentPositionWasStatic = true;
+    }
+
+    const overlay = document.createElement("div");
+    overlay.setAttribute("data-safari-png-raster", "");
+    overlay.setAttribute("aria-hidden", "true");
+
+    const left = img.offsetLeft;
+    const top = img.offsetTop;
+    const w = img.offsetWidth;
+    const h = img.offsetHeight;
+
+    const objectPosition = cs.objectPosition?.trim() || "50% 50%";
+    const zIndex = cs.zIndex === "auto" ? "1" : cs.zIndex;
+
+    overlay.style.cssText = [
+      "position:absolute",
+      `left:${left}px`,
+      `top:${top}px`,
+      `width:${w}px`,
+      `height:${h}px`,
+      "box-sizing:border-box",
+      "pointer-events:none",
+      `z-index:${zIndex}`,
+      `background-image:url(${JSON.stringify(paintUrl)})`,
+      `background-size:${backgroundSizeFromObjectFit(cs.objectFit)}`,
+      `background-position:${objectPosition}`,
+      "background-repeat:no-repeat",
+    ].join(";");
+
+    const prevImgVisibility = img.style.visibility;
+    const prevImgOpacity = img.style.opacity;
+    img.style.visibility = "hidden";
+    img.style.opacity = "0";
+
+    parent.appendChild(overlay);
+    entries.push({
+      parent,
+      overlay,
       img,
-      srcAttr: img.getAttribute("src"),
+      prevImgVisibility,
+      prevImgOpacity,
+      parentPositionWasStatic,
+      revokePaintUrl,
     });
   }
 
-  await Promise.all(
-    snapshots.map(async ({ img }) => {
-      try {
-        const url = new URL(img.currentSrc || img.src, window.location.href).href;
-        const res = await fetch(url, { credentials: "same-origin" });
-        if (!res.ok) return;
-        const blob = await res.blob();
-        const dataUrl = await new Promise<string>((resolve, reject) => {
-          const fr = new FileReader();
-          fr.onerror = () => reject(new Error("read"));
-          fr.onloadend = () => {
-            const r = fr.result;
-            if (typeof r === "string") resolve(r);
-            else reject(new Error("read"));
-          };
-          fr.readAsDataURL(blob);
-        });
-        img.src = dataUrl;
-        await new Promise<void>((resolve) => {
-          const done = () => resolve();
-          if (img.complete) queueMicrotask(done);
-          else {
-            img.onload = done;
-            img.onerror = done;
-          }
-        });
-        await img.decode?.().catch(() => undefined);
-      } catch {
-        /* leave src unchanged */
-      }
-    }),
-  );
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
 
   return () => {
-    for (const { img, srcAttr } of snapshots) {
-      if (srcAttr === null) img.removeAttribute("src");
-      else img.setAttribute("src", srcAttr);
+    for (const e of entries) {
+      e.revokePaintUrl();
+      e.overlay.remove();
+      e.img.style.visibility = e.prevImgVisibility;
+      e.img.style.opacity = e.prevImgOpacity;
+      if (e.parentPositionWasStatic) {
+        e.parent.style.removeProperty("position");
+      }
     }
   };
 }
@@ -188,10 +291,10 @@ export async function toPngFullElement(
   node: HTMLElement,
   options?: ToPngOptions,
 ): Promise<string> {
-  const revertSafariInline = await beginSafariInlineImagesSnapshot(node);
-  try {
-    await prepareDomForHtmlToImage(node);
+  await prepareDomForHtmlToImage(node);
 
+  const revertSafariRaster = await beginSafariForeignObjectRasterWorkaround(node);
+  try {
     const dim = resolveOverflowDimensions(node, options);
     const rect = node.getBoundingClientRect();
     const widthCss = dim.width ?? Math.ceil(rect.width);
@@ -211,6 +314,6 @@ export async function toPngFullElement(
       ...(skipFonts !== undefined ? { skipFonts } : {}),
     });
   } finally {
-    revertSafariInline();
+    revertSafariRaster();
   }
 }
