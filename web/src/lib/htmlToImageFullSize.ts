@@ -16,6 +16,67 @@ function shouldSkipEmbeddedFontsForSnapshot(): boolean {
   return true;
 }
 
+/** WebKit Safari: foreignObject snapshots often drop img URLs; inline as data URLs first. */
+async function beginSafariInlineImagesSnapshot(
+  root: HTMLElement,
+): Promise<() => void> {
+  if (!shouldSkipEmbeddedFontsForSnapshot()) {
+    return () => {};
+  }
+
+  const imgs = [...root.querySelectorAll<HTMLImageElement>("img")];
+  const snapshots: { img: HTMLImageElement; srcAttr: string | null }[] = [];
+
+  for (const img of imgs) {
+    const resolved = img.currentSrc || img.src;
+    if (!resolved || /^data:/i.test(resolved)) continue;
+    snapshots.push({
+      img,
+      srcAttr: img.getAttribute("src"),
+    });
+  }
+
+  await Promise.all(
+    snapshots.map(async ({ img }) => {
+      try {
+        const url = new URL(img.currentSrc || img.src, window.location.href).href;
+        const res = await fetch(url, { credentials: "same-origin" });
+        if (!res.ok) return;
+        const blob = await res.blob();
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onerror = () => reject(new Error("read"));
+          fr.onloadend = () => {
+            const r = fr.result;
+            if (typeof r === "string") resolve(r);
+            else reject(new Error("read"));
+          };
+          fr.readAsDataURL(blob);
+        });
+        img.src = dataUrl;
+        await new Promise<void>((resolve) => {
+          const done = () => resolve();
+          if (img.complete) queueMicrotask(done);
+          else {
+            img.onload = done;
+            img.onerror = done;
+          }
+        });
+        await img.decode?.().catch(() => undefined);
+      } catch {
+        /* leave src unchanged */
+      }
+    }),
+  );
+
+  return () => {
+    for (const { img, srcAttr } of snapshots) {
+      if (srcAttr === null) img.removeAttribute("src");
+      else img.setAttribute("src", srcAttr);
+    }
+  };
+}
+
 function clientBoxWithBorder(node: HTMLElement): { w: number; h: number } {
   const cs = getComputedStyle(node);
   const bx =
@@ -127,24 +188,29 @@ export async function toPngFullElement(
   node: HTMLElement,
   options?: ToPngOptions,
 ): Promise<string> {
-  await prepareDomForHtmlToImage(node);
+  const revertSafariInline = await beginSafariInlineImagesSnapshot(node);
+  try {
+    await prepareDomForHtmlToImage(node);
 
-  const dim = resolveOverflowDimensions(node, options);
-  const rect = node.getBoundingClientRect();
-  const widthCss = dim.width ?? Math.ceil(rect.width);
-  const heightCss = dim.height ?? Math.ceil(rect.height);
+    const dim = resolveOverflowDimensions(node, options);
+    const rect = node.getBoundingClientRect();
+    const widthCss = dim.width ?? Math.ceil(rect.width);
+    const heightCss = dim.height ?? Math.ceil(rect.height);
 
-  const requestedPr = defaultPixelRatio(options?.pixelRatio);
-  const pixelRatio = clampPixelRatioForSize(requestedPr, widthCss, heightCss);
+    const requestedPr = defaultPixelRatio(options?.pixelRatio);
+    const pixelRatio = clampPixelRatioForSize(requestedPr, widthCss, heightCss);
 
-  const skipFonts =
-    options?.skipFonts ??
-    (shouldSkipEmbeddedFontsForSnapshot() ? true : undefined);
+    const skipFonts =
+      options?.skipFonts ??
+      (shouldSkipEmbeddedFontsForSnapshot() ? true : undefined);
 
-  return toPng(node, {
-    ...options,
-    ...dim,
-    pixelRatio,
-    ...(skipFonts !== undefined ? { skipFonts } : {}),
-  });
+    return await toPng(node, {
+      ...options,
+      ...dim,
+      pixelRatio,
+      ...(skipFonts !== undefined ? { skipFonts } : {}),
+    });
+  } finally {
+    revertSafariInline();
+  }
 }
