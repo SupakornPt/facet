@@ -26,9 +26,13 @@ function isMobileLikeViewport(): boolean {
   }
 }
 
-/** Large html2canvas scale often OOMs on phones; keep captures lighter on mobile Safari. */
+/** Large html2canvas scale often OOMs on phones and on Safari; keep captures lighter. */
 function html2CanvasScaleForDevice(requested: number): number {
-  const cap = isMobileLikeViewport() ? 2 : 3;
+  const cap = isWebKitSafari()
+    ? 2
+    : isMobileLikeViewport()
+      ? 2
+      : 3;
   return Math.min(Math.max(1, requested), cap);
 }
 
@@ -148,9 +152,6 @@ async function safariToPngWithHtml2Canvas(
     logging: false,
     foreignObjectRendering: false,
     allowTaint: false,
-    /** Same-origin `<img>` (e.g. `/cat/*.png`) still paints more reliably on Safari with CORS paths enabled. */
-    useCORS: true,
-    imageTimeout: 20_000,
     scrollX: 0,
     scrollY: 0,
   });
@@ -179,7 +180,16 @@ export async function toPngFullElement(
     try {
       return await safariToPngWithHtml2Canvas(node, options, pixelRatio);
     } catch {
-      return await safariToPngWithHtml2Canvas(node, options, 1);
+      try {
+        return await safariToPngWithHtml2Canvas(node, options, 1);
+      } catch {
+        /* Last resort: svg foreignObject path is flaky on Safari but better than a hard failure. */
+        return await toPng(node, {
+          ...options,
+          ...dim,
+          pixelRatio: Math.min(1.5, pixelRatio),
+        });
+      }
     }
   }
 
