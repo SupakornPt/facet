@@ -10,6 +10,9 @@ import type { AssessmentResult } from "@/types/assessment";
 import { buildShareSummaryText } from "@/lib/shareSummary";
 import { useLocale } from "@/lib/locale";
 import { ResultShareCard } from "@/components/results/ResultShareCard";
+import { PngCaptureLightbox } from "@/components/results/PngCaptureLightbox";
+import { prefersPngCaptureLightbox } from "@/lib/pngCaptureMobile";
+import { usePngCaptureLightbox } from "@/lib/usePngCaptureLightbox";
 
 interface ShareSummaryProps {
   result: AssessmentResult;
@@ -20,6 +23,8 @@ export function ShareSummary({ result }: ShareSummaryProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const [pngBusy, setPngBusy] = useState(false);
+  const [pngPreview, setPngPreview] = useState<string | null>(null);
+  const captureUi = usePngCaptureLightbox();
 
   const text = buildShareSummaryText(result, locale, {
     headline: m.results.shareHeadline,
@@ -59,14 +64,20 @@ export function ShareSummary({ result }: ShareSummaryProps) {
   const downloadPng = useCallback(async () => {
     const node = cardRef.current;
     if (!node) return;
-    const warm = openPngDownloadWarmWindow();
+    const useLightbox = prefersPngCaptureLightbox();
+    const warm = useLightbox ? null : openPngDownloadWarmWindow();
     setPngBusy(true);
     try {
       const dataUrl = await toPngFullElement(node, {
         cacheBust: true,
         backgroundColor: "#ffffff",
       });
-      await triggerPngDownload(dataUrl, "facet5-profile-summary.png", warm);
+      if (useLightbox) {
+        warm?.close();
+        setPngPreview(dataUrl);
+      } else {
+        await triggerPngDownload(dataUrl, "facet5-profile-summary.png", warm);
+      }
     } catch {
       warm?.close();
       window.alert(m.results.shareDownloadPngFailed);
@@ -104,7 +115,11 @@ export function ShareSummary({ result }: ShareSummaryProps) {
           onClick={() => void downloadPng()}
           className="rounded-2xl border-2 border-app-primary/35 bg-app-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-app-primary-soft/40 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          {pngBusy ? m.results.shareDownloadPngWorking : m.results.shareDownloadPng}
+          {pngBusy
+            ? m.results.shareDownloadPngWorking
+            : captureUi
+              ? m.results.shareViewCardImageCapture
+              : m.results.shareDownloadPng}
         </button>
       </div>
       <div className="mt-6 overflow-x-auto rounded-2xl border border-app-border bg-app-elevated p-4">
@@ -113,6 +128,14 @@ export function ShareSummary({ result }: ShareSummaryProps) {
         </p>
         <ResultShareCard ref={cardRef} result={result} />
       </div>
+
+      <PngCaptureLightbox
+        imageSrc={pngPreview}
+        title={m.results.shareTitle}
+        hint={m.results.shareViewCardImageCaptureHint}
+        closeLabel={m.results.shareViewCardImageClose}
+        onClose={() => setPngPreview(null)}
+      />
     </section>
   );
 }

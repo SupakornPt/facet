@@ -28,7 +28,10 @@ import { PROFILE_BUDDY_COUNT, profileBuddyIndex } from "@/lib/profileBuddy";
 import { PixelProfileBuddy } from "@/components/results/PixelProfileBuddy";
 import { CompatibleCatCard } from "@/components/results/CompatibleCatCard";
 import { IdCardBarcode } from "@/components/results/IdCardBarcode";
+import { PngCaptureLightbox } from "@/components/results/PngCaptureLightbox";
 import { buildShareSummaryText } from "@/lib/shareSummary";
+import { prefersPngCaptureLightbox } from "@/lib/pngCaptureMobile";
+import { usePngCaptureLightbox } from "@/lib/usePngCaptureLightbox";
 import type { QuestionsPayload } from "@/types/assessment";
 
 const situationalData = situationalQuestionsData as QuestionsPayload;
@@ -39,6 +42,8 @@ export default function ResultsClient() {
   const [showMore, setShowMore] = useState(false);
   const [copied, setCopied] = useState(false);
   const [pngBusy, setPngBusy] = useState(false);
+  const [identityPngPreview, setIdentityPngPreview] = useState<string | null>(null);
+  const captureUi = usePngCaptureLightbox();
   const [identityCardNode, setIdentityCardNode] = useState<HTMLElement | null>(null);
   const [holderName] = useState(() =>
     typeof window !== "undefined" ? loadProfileName() : "",
@@ -164,14 +169,20 @@ export default function ResultsClient() {
   }, [copySummary, m.results.shareTitle, shareText]);
   const downloadIdentityCardPng = useCallback(async () => {
     if (!identityCardNode) return;
-    const warm = openPngDownloadWarmWindow();
+    const useLightbox = prefersPngCaptureLightbox();
+    const warm = useLightbox ? null : openPngDownloadWarmWindow();
     setPngBusy(true);
     try {
       const dataUrl = await toPngFullElement(identityCardNode, {
         cacheBust: true,
         backgroundColor: "#e8f4fc",
       });
-      await triggerPngDownload(dataUrl, "facet5-identity-card.png", warm);
+      if (useLightbox) {
+        warm?.close();
+        setIdentityPngPreview(dataUrl);
+      } else {
+        await triggerPngDownload(dataUrl, "facet5-identity-card.png", warm);
+      }
     } catch {
       warm?.close();
       window.alert(m.results.shareDownloadPngFailed);
@@ -343,7 +354,11 @@ export default function ResultsClient() {
             onClick={() => void downloadIdentityCardPng()}
             className="w-full rounded-2xl border-2 border-app-primary/40 bg-app-card px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-app-primary-soft/30 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {pngBusy ? m.results.shareDownloadPngWorking : m.results.shareDownloadPng}
+            {pngBusy
+              ? m.results.shareDownloadPngWorking
+              : captureUi
+                ? m.results.shareViewCardImageCapture
+                : m.results.shareDownloadPng}
           </button>
         </div>
       </div>
@@ -424,6 +439,14 @@ export default function ResultsClient() {
       <DevelopmentAreas subFacets={result.subFacets} />
         </>
       ) : null}
+
+      <PngCaptureLightbox
+        imageSrc={identityPngPreview}
+        title={m.results.identityCardLabel}
+        hint={m.results.shareViewCardImageCaptureHint}
+        closeLabel={m.results.shareViewCardImageClose}
+        onClose={() => setIdentityPngPreview(null)}
+      />
     </div>
   );
 }
