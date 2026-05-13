@@ -80,11 +80,15 @@ export function ShareSummary({ result }: ShareSummaryProps) {
       }
     } catch {
       warm?.close();
-      window.alert(m.results.shareDownloadPngFailed);
+      window.alert(
+        useLightbox
+          ? m.results.shareViewCardImageCaptureFailed
+          : m.results.shareDownloadPngFailed,
+      );
     } finally {
       setPngBusy(false);
     }
-  }, [m.results.shareDownloadPngFailed]);
+  }, [m.results.shareDownloadPngFailed, m.results.shareViewCardImageCaptureFailed]);
 
   return (
     <section className="rounded-3xl border border-app-border bg-app-primary-soft/25 p-6 shadow-[var(--app-shadow)] sm:p-8">

@@ -1,7 +1,7 @@
 /**
  * True for desktop Safari and iOS Safari (not Chrome/Edge on those platforms).
  */
-function isWebKitSafari(): boolean {
+export function isWebKitSafari(): boolean {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent;
   if (!/AppleWebKit/i.test(ua) || !/Safari/i.test(ua)) return false;

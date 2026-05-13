@@ -16,6 +16,22 @@ function isWebKitSafari(): boolean {
   return true;
 }
 
+function isMobileLikeViewport(): boolean {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia("(max-width: 767px)").matches) return true;
+  try {
+    return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  } catch {
+    return false;
+  }
+}
+
+/** Large html2canvas scale often OOMs on phones; keep captures lighter on mobile Safari. */
+function html2CanvasScaleForDevice(requested: number): number {
+  const cap = isMobileLikeViewport() ? 2 : 3;
+  return Math.min(Math.max(1, requested), cap);
+}
+
 function clientBoxWithBorder(node: HTMLElement): { w: number; h: number } {
   const cs = getComputedStyle(node);
   const bx =
@@ -124,13 +140,17 @@ async function safariToPngWithHtml2Canvas(
 ): Promise<string> {
   const { default: html2canvas } = await import("html2canvas");
   const bg = options?.backgroundColor;
+  const scale = html2CanvasScaleForDevice(pixelRatio);
   const canvas = await html2canvas(node, {
-    scale: pixelRatio,
+    scale,
     backgroundColor:
       typeof bg === "string" && bg.length > 0 ? bg : null,
     logging: false,
     foreignObjectRendering: false,
     allowTaint: false,
+    /** Same-origin `<img>` (e.g. `/cat/*.png`) still paints more reliably on Safari with CORS paths enabled. */
+    useCORS: true,
+    imageTimeout: 20_000,
     scrollX: 0,
     scrollY: 0,
   });
@@ -156,7 +176,11 @@ export async function toPngFullElement(
   const pixelRatio = clampPixelRatioForSize(requestedPr, widthCss, heightCss);
 
   if (isWebKitSafari()) {
-    return safariToPngWithHtml2Canvas(node, options, pixelRatio);
+    try {
+      return await safariToPngWithHtml2Canvas(node, options, pixelRatio);
+    } catch {
+      return await safariToPngWithHtml2Canvas(node, options, 1);
+    }
   }
 
   return toPng(node, {

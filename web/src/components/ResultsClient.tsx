@@ -185,11 +185,19 @@ export default function ResultsClient() {
       }
     } catch {
       warm?.close();
-      window.alert(m.results.shareDownloadPngFailed);
+      window.alert(
+        useLightbox
+          ? m.results.shareViewCardImageCaptureFailed
+          : m.results.shareDownloadPngFailed,
+      );
     } finally {
       setPngBusy(false);
     }
-  }, [identityCardNode, m.results.shareDownloadPngFailed]);
+  }, [
+    identityCardNode,
+    m.results.shareDownloadPngFailed,
+    m.results.shareViewCardImageCaptureFailed,
+  ]);
 
   if (!result) {
     return (
