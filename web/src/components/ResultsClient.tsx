@@ -292,7 +292,7 @@ export default function ResultsClient() {
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-start justify-between gap-2">
-              <h2 className="text-left text-2xl font-black uppercase leading-tight tracking-[0.12em] text-[#0c2340] sm:text-right sm:text-3xl">
+              <h2 className="whitespace-nowrap text-left text-2xl font-black uppercase leading-tight tracking-[0.12em] text-[#0c2340] sm:text-right sm:text-3xl">
                 {m.results.idCardVisualTitle}
               </h2>
             </div>

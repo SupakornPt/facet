@@ -83,6 +83,57 @@ export async function prepareDomForHtmlToImage(node: HTMLElement): Promise<void>
   });
 }
 
+/** Replace `<img src>` with data URLs so raster paint survives html2canvas / Safari clones. */
+async function inlineRasterImagesForCapture(root: HTMLElement): Promise<() => void> {
+  const originals: { el: HTMLImageElement; src: string }[] = [];
+
+  const blobToDataUrl = (blob: Blob): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result as string);
+      fr.onerror = () => reject(fr.error);
+      fr.readAsDataURL(blob);
+    });
+
+  for (const img of root.querySelectorAll("img")) {
+    if (!(img instanceof HTMLImageElement)) continue;
+    const resolved = img.currentSrc || img.src;
+    if (!resolved || resolved.startsWith("data:") || resolved.startsWith("blob:")) {
+      continue;
+    }
+    try {
+      const res = await fetch(resolved, { credentials: "same-origin" });
+      if (!res.ok) continue;
+      const blob = await res.blob();
+      if (blob.size === 0) continue;
+      const dataUrl = await blobToDataUrl(blob);
+      originals.push({ el: img, src: img.src });
+      img.src = dataUrl;
+    } catch {
+      /* keep original src */
+    }
+  }
+
+  await Promise.all(
+    [...root.querySelectorAll("img")].map((img) =>
+      img.decode?.().catch(() => undefined) ?? Promise.resolve(),
+    ),
+  );
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+
+  return () => {
+    for (const { el, src } of originals) {
+      try {
+        el.src = src;
+      } catch {
+        /* ignore */
+      }
+    }
+  };
+}
+
 function resolveOverflowDimensions(
   node: HTMLElement,
   options?: ToPngOptions,
@@ -167,6 +218,7 @@ export async function toPngFullElement(
   options?: ToPngOptions,
 ): Promise<string> {
   await prepareDomForHtmlToImage(node);
+  const revertInline = await inlineRasterImagesForCapture(node);
 
   const dim = resolveOverflowDimensions(node, options);
   const rect = node.getBoundingClientRect();
@@ -176,26 +228,30 @@ export async function toPngFullElement(
   const requestedPr = defaultPixelRatio(options?.pixelRatio);
   const pixelRatio = clampPixelRatioForSize(requestedPr, widthCss, heightCss);
 
-  if (isWebKitSafari()) {
-    try {
-      return await safariToPngWithHtml2Canvas(node, options, pixelRatio);
-    } catch {
+  try {
+    if (isWebKitSafari()) {
       try {
-        return await safariToPngWithHtml2Canvas(node, options, 1);
+        return await safariToPngWithHtml2Canvas(node, options, pixelRatio);
       } catch {
-        /* Last resort: svg foreignObject path is flaky on Safari but better than a hard failure. */
-        return await toPng(node, {
-          ...options,
-          ...dim,
-          pixelRatio: Math.min(1.5, pixelRatio),
-        });
+        try {
+          return await safariToPngWithHtml2Canvas(node, options, 1);
+        } catch {
+          /* Last resort: foreignObject often drops `<img>` cats; inlining above usually avoids this. */
+          return await toPng(node, {
+            ...options,
+            ...dim,
+            pixelRatio: Math.min(1.5, pixelRatio),
+          });
+        }
       }
     }
-  }
 
-  return toPng(node, {
-    ...options,
-    ...dim,
-    pixelRatio,
-  });
+    return await toPng(node, {
+      ...options,
+      ...dim,
+      pixelRatio,
+    });
+  } finally {
+    revertInline();
+  }
 }
