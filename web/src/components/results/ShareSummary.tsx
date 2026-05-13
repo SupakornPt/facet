@@ -2,6 +2,10 @@
 
 import { useCallback, useRef, useState } from "react";
 import { toPngFullElement } from "@/lib/htmlToImageFullSize";
+import {
+  openPngDownloadWarmWindow,
+  triggerPngDownload,
+} from "@/lib/triggerPngDownload";
 import type { AssessmentResult } from "@/types/assessment";
 import { buildShareSummaryText } from "@/lib/shareSummary";
 import { useLocale } from "@/lib/locale";
@@ -55,20 +59,21 @@ export function ShareSummary({ result }: ShareSummaryProps) {
   const downloadPng = useCallback(async () => {
     const node = cardRef.current;
     if (!node) return;
+    const warm = openPngDownloadWarmWindow();
     setPngBusy(true);
     try {
       const dataUrl = await toPngFullElement(node, {
         cacheBust: true,
         backgroundColor: "#ffffff",
       });
-      const a = document.createElement("a");
-      a.download = "facet5-profile-summary.png";
-      a.href = dataUrl;
-      a.click();
+      await triggerPngDownload(dataUrl, "facet5-profile-summary.png", warm);
+    } catch {
+      warm?.close();
+      window.alert(m.results.shareDownloadPngFailed);
     } finally {
       setPngBusy(false);
     }
-  }, []);
+  }, [m.results.shareDownloadPngFailed]);
 
   return (
     <section className="rounded-3xl border border-app-border bg-app-primary-soft/25 p-6 shadow-[var(--app-shadow)] sm:p-8">

@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toPngFullElement } from "@/lib/htmlToImageFullSize";
+import {
+  openPngDownloadWarmWindow,
+  triggerPngDownload,
+} from "@/lib/triggerPngDownload";
 import { ReviewAssessmentLink } from "@/components/ReviewAssessmentLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import situationalQuestionsData from "@/data/situationalQuestions.json";
@@ -160,20 +164,21 @@ export default function ResultsClient() {
   }, [copySummary, m.results.shareTitle, shareText]);
   const downloadIdentityCardPng = useCallback(async () => {
     if (!identityCardNode) return;
+    const warm = openPngDownloadWarmWindow();
     setPngBusy(true);
     try {
       const dataUrl = await toPngFullElement(identityCardNode, {
         cacheBust: true,
         backgroundColor: "#e8f4fc",
       });
-      const a = document.createElement("a");
-      a.download = "facet5-identity-card.png";
-      a.href = dataUrl;
-      a.click();
+      await triggerPngDownload(dataUrl, "facet5-identity-card.png", warm);
+    } catch {
+      warm?.close();
+      window.alert(m.results.shareDownloadPngFailed);
     } finally {
       setPngBusy(false);
     }
-  }, [identityCardNode]);
+  }, [identityCardNode, m.results.shareDownloadPngFailed]);
 
   if (!result) {
     return (

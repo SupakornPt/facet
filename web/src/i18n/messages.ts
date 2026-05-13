@@ -106,6 +106,7 @@ export type Messages = {
     shareCardCaption: string;
     shareDownloadPng: string;
     shareDownloadPngWorking: string;
+    shareDownloadPngFailed: string;
     shareCardFoot: string;
     /** Shown when the instruction-following item was answered incorrectly. */
     attentionFailTitle: string;
@@ -249,6 +250,8 @@ const en: Messages = {
     shareCardCaption: "Preview (saved as PNG)",
     shareDownloadPng: "Download PNG card",
     shareDownloadPngWorking: "Creating image…",
+    shareDownloadPngFailed:
+      "Could not finish the PNG. If a new tab opened, use Share or Save there; otherwise allow pop-ups for this site and try again.",
     shareCardFoot: "Summary only · Facet5-style demo · Not clinical",
     attentionFailTitle: "Attention check missed",
     attentionFailBody:
@@ -394,6 +397,8 @@ const th: Messages = {
     shareCardCaption: "ตัวอย่าง (บันทึกเป็น PNG)",
     shareDownloadPng: "ดาวน์โหลดการ์ด PNG",
     shareDownloadPngWorking: "กำลังสร้างรูป…",
+    shareDownloadPngFailed:
+      "สร้าง PNG ไม่สำเร็จ ถ้ามีแท็บใหม่เปิดอยู่ ให้ใช้แชร์หรือบันทึกจากแท็บนั้น หรืออนุญาตป๊อปอัปสำหรับเว็บนี้แล้วลองอีกครั้ง",
     shareCardFoot: "สรุปเท่านั้น · Facet5-style สาธิต · ไม่ใช่ทางคลินิก",
     attentionFailTitle: "ไม่ผ่านข้อตรวจสอบความใส่ใจ",
     attentionFailBody:
