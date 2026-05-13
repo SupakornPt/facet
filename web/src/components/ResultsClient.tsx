@@ -324,14 +324,12 @@ export default function ResultsClient() {
               </div>
               <div className="flex flex-nowrap items-end justify-between gap-2 border-b-2 border-[#0c2340] pb-1.5 sm:gap-3">
                 <div className="min-w-0 shrink">
-                  <div className="flex min-w-0 flex-nowrap items-baseline gap-2">
-                    <p className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-[#3d5a73]">
-                      {m.results.certifiedField}
-                    </p>
-                    <p className="min-w-0 flex-1 truncate text-sm font-semibold text-[#0c2340]">
-                      {certifiedDate}
-                    </p>
-                  </div>
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-[#3d5a73]">
+                    {m.results.certifiedField}
+                  </p>
+                  <p className="truncate text-sm font-semibold text-[#0c2340]">
+                    {certifiedDate}
+                  </p>
                 </div>
                 <IdCardBarcode seed={triCode} />
               </div>
